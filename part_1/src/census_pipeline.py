@@ -168,6 +168,29 @@ def prepare(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
 
 
 # ---------------------------------------------------------------------------
+# STEP 5b - The same cleaned table, but readable by a human
+# Why:     charts must show "Private" and "United-States", not 86 one-hot
+#          columns. This is the pipeline minus the encoding step, filled the
+#          same way, so the charts and the model table cannot disagree.
+# ---------------------------------------------------------------------------
+def load_analysis_frame(path: str | Path) -> pd.DataFrame:
+    """Return the cleaned, de-duplicated dataset with readable categories."""
+    df = clean_text(load_raw(path))
+    df[TARGET] = normalise_target(df[TARGET])
+    df = df.drop(columns=DROPPED_COLS).drop_duplicates(ignore_index=True)
+
+    for col in NUMERIC_COLS:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # Same rule as the pipeline: every missing categorical value becomes the
+    # literal "Unknown" category, so the charts show where the gaps are.
+    for col in CATEGORICAL_COLS:
+        df[col] = df[col].fillna(UNKNOWN)
+
+    return df[[*NUMERIC_COLS, *CATEGORICAL_COLS, TARGET]]
+
+
+# ---------------------------------------------------------------------------
 # STEP 6 - The two branches of the drawing, as a scikit-learn transformer
 # Why:     ColumnTransformer applies a different recipe per column group and
 #          puts the results back together - that IS the "unify DF" step.
