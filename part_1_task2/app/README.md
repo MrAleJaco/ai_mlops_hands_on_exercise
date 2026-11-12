@@ -9,10 +9,10 @@ The app expects the API on port 8000; Vite proxies `/api` to it.
 
 ```bash
 # terminal 1 (repository root)
-uv run uvicorn app:app --app-dir part_2/api --reload --port 8000
+uv run uvicorn app:app --app-dir part_1_task2/api --reload --port 8000
 
 # terminal 2
-cd part_2/app
+cd part_1_task2/app
 npm install
 npm run dev          # http://localhost:5173
 ```

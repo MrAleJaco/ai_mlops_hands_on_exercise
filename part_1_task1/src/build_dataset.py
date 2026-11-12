@@ -2,13 +2,13 @@
 
 Usage (from the repository root):
 
-    uv run python part_1/src/build_dataset.py
+    uv run python part_1_task1/src/build_dataset.py
 
-    uv run python part_1/src/build_dataset.py \
-        --input  part_1/data/raw_data/census_income.csv \
-        --output part_1/data/processed/census_income_final.csv
+    uv run python part_1_task1/src/build_dataset.py \
+        --input  part_1_task1/data/raw_data/census_income.csv \
+        --output part_1_task1/data/processed/census_income_final.csv
 
-The script follows the design in part_1/data/designs/EDA.jpg and writes ONE
+The script follows the design in part_1_task1/data/designs/EDA.jpg and writes ONE
 CSV: no train/test split, no intermediate files.
 """
 
@@ -31,10 +31,10 @@ from census_pipeline import (
 
 # ---------------------------------------------------------------------------
 # STEP 1 - Work out the default paths from this file's location
-# Why:     "python part_1/src/build_dataset.py" must work from any directory,
+# Why:     "python part_1_task1/src/build_dataset.py" must work from any directory,
 #          so paths are relative to the repository, not to the shell.
 # ---------------------------------------------------------------------------
-PART_DIR = Path(__file__).resolve().parents[1]  # .../part_1
+PART_DIR = Path(__file__).resolve().parents[1]  # .../part_1_task1
 DEFAULT_INPUT = PART_DIR / "data" / "raw_data" / "census_income.csv"
 DEFAULT_OUTPUT = PART_DIR / "data" / "processed" / "census_income_final.csv"
 

@@ -42,7 +42,7 @@ FastAPI (api:8000) --- analysis frame 48,790 x 14, encoded table 48,790 x 93
 pipeline (one-shot) --- build_dataset.py, exits 0 before the API starts
    ^
    |  read-only mounts
-part_1/data/raw_data/census_income.csv  (or datasets/census_income.csv)
+part_1_task1/data/raw_data/census_income.csv  (or datasets/census_income.csv)
 ```
 
 Why no database: the analysis frame loads in 0.62 s and a cached aggregate
@@ -57,13 +57,13 @@ schema and a query layer without removing any of those costs. The API returns
 file, which is deliberately not committed:
 
 ```bash
-cp datasets/census_income.csv part_1/data/raw_data/census_income.csv
+cp datasets/census_income.csv part_1_task1/data/raw_data/census_income.csv
 ```
 
 Then, from the repository root:
 
 ```bash
-cd part_2/deploy
+cd part_1_task2/deploy
 docker compose up -d --build
 ```
 
@@ -97,10 +97,10 @@ host ports. Inside the containers the paths are fixed by compose:
 ```bash
 # terminal 1 - repository root
 uv sync
-uv run uvicorn app:app --app-dir part_2/api --reload --port 8000
+uv run uvicorn app:app --app-dir part_1_task2/api --reload --port 8000
 
 # terminal 2
-cd part_2/app
+cd part_1_task2/app
 npm install
 npm run dev          # http://localhost:5173, proxies /api to :8000
 ```
@@ -155,10 +155,10 @@ send all 48,790 rows on request.
 ## Checks
 
 ```bash
-uv run pytest part_1/tests part_2/api/tests -q   # 41 tests
-cd part_2/app && npm run test                   # 13 Vitest tests
-cd part_2/app && npm run build                  # type-check + bundle
-cd part_2/app && npm run screenshots            # 7 views, fails on console errors
+uv run pytest part_1_task1/tests part_1_task2/api/tests -q   # 41 tests
+cd part_1_task2/app && npm run test                   # 13 Vitest tests
+cd part_1_task2/app && npm run build                  # type-check + bundle
+cd part_1_task2/app && npm run screenshots            # 7 views, fails on console errors
 ```
 
 `npm run screenshots` needs the stack running (or `APP_URL` pointing at the dev
@@ -168,9 +168,9 @@ server) and writes one PNG per view to `reports/screenshots/`.
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| `pipeline` exits 1 with "No raw CSV found" | The raw file is missing from both mounted folders | Copy it to `part_1/data/raw_data/`, then `docker compose up -d` |
+| `pipeline` exits 1 with "No raw CSV found" | The raw file is missing from both mounted folders | Copy it to `part_1_task1/data/raw_data/`, then `docker compose up -d` |
 | `pipeline` exits 1 with `PermissionError` on `/data/artifacts` | The named volume is root-owned the first time it is created | Nothing to do: the service starts as root only to `chown` the volume and then drops to uid 10001 |
-| `sh: not found` or `\r: not found` from the build script | The script was checked out with CRLF line endings | `.gitattributes` pins `*.sh` to LF; re-clone or run `git add --renormalize part_2/deploy` |
+| `sh: not found` or `\r: not found` from the build script | The script was checked out with CRLF line endings | `.gitattributes` pins `*.sh` to LF; re-clone or run `git add --renormalize part_1_task2/deploy` |
 | Web loads but every chart says "Could not load this view" | The API container is down or still starting | `docker compose ps`, then `docker compose logs api` |
 | `/distribution` returns a 404 on refresh | nginx is serving an old config without the SPA fallback | Rebuild: `docker compose up -d --build web` |
 | Port 8080 already in use | Another service on the host | Set `WEB_PORT=8081` in `deploy/.env` and start again |

@@ -25,9 +25,9 @@ WORKDIR /app
 
 COPY --from=deps /app/.venv /app/.venv
 COPY pyproject.toml ./
-COPY part_1/src part_1/src
-COPY part_2/api part_2/api
-COPY part_2/deploy/build_artifacts.sh part_2/deploy/build_artifacts.sh
+COPY part_1_task1/src part_1_task1/src
+COPY part_1_task2/api part_1_task2/api
+COPY part_1_task2/deploy/build_artifacts.sh part_1_task2/deploy/build_artifacts.sh
 
 USER app
 EXPOSE 8000
@@ -36,4 +36,4 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=20s --retries=6 \
     CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz').status == 200 else 1)"
 
 # The same image runs the one-shot preprocessing job (compose overrides CMD).
-CMD ["uvicorn", "app:app", "--app-dir", "part_2/api", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--app-dir", "part_1_task2/api", "--host", "0.0.0.0", "--port", "8000"]

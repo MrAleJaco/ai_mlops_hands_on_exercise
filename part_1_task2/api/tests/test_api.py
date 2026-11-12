@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 from app import app
 
 ENCODED_CSV = (
-    Path(__file__).resolve().parents[3] / "part_1" / "data" / "processed" / "census_income_final.csv"
+    Path(__file__).resolve().parents[3] / "part_1_task1" / "data" / "processed" / "census_income_final.csv"
 )
 
 

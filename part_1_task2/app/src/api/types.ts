@@ -1,4 +1,4 @@
-/** Shapes returned by part_2/api - kept in sync by hand, small enough to read. */
+/** Shapes returned by part_1_task2/api - kept in sync by hand, small enough to read. */
 
 export interface BoxStats {
   n: number

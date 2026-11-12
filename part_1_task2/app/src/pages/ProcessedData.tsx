@@ -18,7 +18,7 @@ export function ProcessedData() {
       <header className="page-header">
         <h1>Processed data</h1>
         <p>
-          The encoded table that <code>part_1/src/build_dataset.py</code> writes, served page by
+          The encoded table that <code>part_1_task1/src/build_dataset.py</code> writes, served page by
           page. This is the only view that uses the 93-column artefact; every chart reads the
           readable 14-column analysis frame instead, because one-hot columns make charts unreadable.
         </p>
@@ -115,7 +115,7 @@ export function ProcessedData() {
         </Status>
       </Card>
 
-      <Card title="Why this shape" hint="Each step is enforced by part_1/src/census_pipeline.py and its 19 tests.">
+      <Card title="Why this shape" hint="Each step is enforced by part_1_task1/src/census_pipeline.py and its 19 tests.">
         <ul className="bullets">
           <li>
             <strong>6 numeric columns</strong> stay numeric and are median-imputed by the

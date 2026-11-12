@@ -8,13 +8,13 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(REPO_ROOT / "part_1" / "src"))
-sys.path.insert(0, str(REPO_ROOT / "part_2" / "api"))
+sys.path.insert(0, str(REPO_ROOT / "part_1_task1" / "src"))
+sys.path.insert(0, str(REPO_ROOT / "part_1_task2" / "api"))
 
 from census_pipeline import load_analysis_frame  # noqa: E402
 
-RAW_CSV = REPO_ROOT / "part_1" / "data" / "raw_data" / "census_income.csv"
-ENCODED_CSV = REPO_ROOT / "part_1" / "data" / "processed" / "census_income_final.csv"
+RAW_CSV = REPO_ROOT / "part_1_task1" / "data" / "raw_data" / "census_income.csv"
+ENCODED_CSV = REPO_ROOT / "part_1_task1" / "data" / "processed" / "census_income_final.csv"
 
 
 @pytest.fixture(scope="session")

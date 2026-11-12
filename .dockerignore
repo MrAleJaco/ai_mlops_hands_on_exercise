@@ -10,9 +10,9 @@
 **/node_modules
 **/dist
 **/*.tsbuildinfo
-part_1/data
+part_1_task1/data
 reports
 datasets
 docs
 *.md
-!part_2/app/README.md
+!part_1_task2/app/README.md

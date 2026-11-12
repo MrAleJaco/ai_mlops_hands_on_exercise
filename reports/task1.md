@@ -3,17 +3,17 @@
 | Field | Value |
 | --- | --- |
 | Student | Alessandro Jacopo Ravizza |
-| Dataset | Census Income (`part_1/data/raw_data/census_income.csv`) |
+| Dataset | Census Income (`part_1_task1/data/raw_data/census_income.csv`) |
 | Task | 1 |
 | Tag / commit | `92ce2f3` (`task1` tag not pushed yet) |
-| How to run | `uv sync` then `uv run python part_1/src/build_dataset.py`, `uv run python part_1/src/make_charts.py`, `uv run pytest part_1/tests -q` |
+| How to run | `uv sync` then `uv run python part_1_task1/src/build_dataset.py`, `uv run python part_1_task1/src/make_charts.py`, `uv run pytest part_1_task1/tests -q` |
 | Timebox | 2:30–3:00, finished |
 
 ## 1. Summary
 
 From a 48,842 × 15 raw Census Income file I built a reproducible scikit-learn pipeline that cleans, de-duplicates and encodes the data into one 48,790 × 93 table, plus four seaborn figures that follow my chart design. The target is imbalanced: 23.9% of rows earn more than 50K. `education-num` and `age` separate the classes most (median 9 vs 12 years, 34 vs 43 years old), while `fnlwgt` carries no signal (r = −0.006). The pipeline fixes five data issues, including missing values stored as `" ?"` and four spellings of the label, and 19 tests protect those fixes. The main limitation is imputation: 3,615 rows (7.4%) with a missing field are filled with the literal `"Unknown"`, which mixes refusal, not-applicable and unrecorded answers into one category.
 
-**Evidence:** `part_1/src/build_dataset.py` (`abd4ab1`); the run prints 48,790 × 93 and 0 missing cells.
+**Evidence:** `part_1_task1/src/build_dataset.py` (`abd4ab1`); the run prints 48,790 × 93 and 0 missing cells.
 
 ## 2. Goal and success criteria
 
@@ -24,7 +24,7 @@ From a 48,842 × 15 raw Census Income file I built a reproducible scikit-learn p
 | Reproducible load and transform | `build_dataset.py` reads only the raw file | one command rebuilds the table | 48,790 × 93, 0 missing cells |
 | Data issues identified and fixed | audit table printed by the script, plus tests | every issue traced to a fix | 5 issues fixed |
 | Findings backed by charts | one figure per node of `designs/Charts.jpg` | all nodes covered | 4/4 nodes (1 explicitly N/A) |
-| Automated checks | `pytest part_1/tests -q` | all green | 19 passed |
+| Automated checks | `pytest part_1_task1/tests -q` | all green | 19 passed |
 
 **Evidence:** terminal output of the three commands at the top of this report.
 
@@ -56,7 +56,7 @@ raw CSV (48,842 x 15)
                              unify --> 48,790 x 93 --> census_income_final.csv
 ```
 
-**Evidence:** `part_1/src/census_pipeline.py`, `part_1/src/build_dataset.py`; commit `abd4ab1`.
+**Evidence:** `part_1_task1/src/census_pipeline.py`, `part_1_task1/src/build_dataset.py`; commit `abd4ab1`.
 
 ## 4. Results
 
@@ -100,7 +100,7 @@ raw CSV (48,842 x 15)
 
 **Figure 4.** `age` and `education-num` are the only columns whose point clouds separate the two classes cleanly. `capital-gain` sits on a hard cap at 99,999, and `capital-loss` on round bands — artefacts of how the variables were recorded, not behaviour. `fnlwgt` shows no structure against the target.
 
-**Evidence:** `part_1/src/make_charts.py` (`92ce2f3`), PNGs in `reports/figures/`; every number above is printed by `build_dataset.py` or by the caption output of `make_charts.py`.
+**Evidence:** `part_1_task1/src/make_charts.py` (`92ce2f3`), PNGs in `reports/figures/`; every number above is printed by `build_dataset.py` or by the caption output of `make_charts.py`.
 
 ## 5. Problems and how you handled them
 
@@ -112,7 +112,7 @@ raw CSV (48,842 x 15)
 | Deprecation warning on every box plot | seaborn 0.13.2 still passes the removed `vert=` argument to matplotlib 3.11 | None: it is upstream and harmless | Open |
 | `native-country` contains truncated labels `Hong` (30 rows) and `South` (115 rows) | source file truncated Hong Kong / South Korea | Left as separate categories and noted | Open |
 
-**Evidence:** `part_1/tests/` (19 passed); the warning text appears in the pytest summary.
+**Evidence:** `part_1_task1/tests/` (19 passed); the warning text appears in the pytest summary.
 
 ## 6. Limitations and trade-offs
 
@@ -125,9 +125,9 @@ raw CSV (48,842 x 15)
 | analysis | Pearson correlation only captures linear relations | Non-linear effects of age and capital gains are understated | Compare group rates (Figure 3) rather than rely on r alone |
 | features | `fnlwgt` is a sampling weight, not behaviour | Noise column with r = −0.006 | Likely drop before modelling |
 | fairness | `sex`, `race` and `marital-status` are strongly predictive and retained | A model using them would reproduce historical inequality | Fairness analysis and an explicit decision in Task 3 |
-| operations | Figures are derived artefacts and `part_1/data/processed/` is gitignored | Regeneration needs the script and the raw file | A tracked copy lives in `reports/figures/` |
+| operations | Figures are derived artefacts and `part_1_task1/data/processed/` is gitignored | Regeneration needs the script and the raw file | A tracked copy lives in `reports/figures/` |
 
-**Evidence:** `part_1/src/build_dataset.py`; `.gitignore`; section 4 figures.
+**Evidence:** `part_1_task1/src/build_dataset.py`; `.gitignore`; section 4 figures.
 
 ## 7. Next steps
 
@@ -145,8 +145,8 @@ raw CSV (48,842 x 15)
 
 | Tool | What you used it for | Where (files or sections) | How you checked the output |
 | --- | --- | --- | --- |
-| OpenCode agent (DeepSeek V4.1 Flash) | Implement the preprocessing pipeline from `designs/EDA.jpg` and draft the tests | `part_1/src/census_pipeline.py`, `part_1/src/build_dataset.py`, `part_1/tests/` | Ran the script and the tests, compared the audit numbers against the raw file |
-| OpenCode agent | Implement the chart design from `designs/Charts.jpg` in seaborn | `part_1/src/make_charts.py`, `reports/figures/` | Opened every PNG, checked that each number in the captions matched the data |
+| OpenCode agent (DeepSeek V4.1 Flash) | Implement the preprocessing pipeline from `designs/EDA.jpg` and draft the tests | `part_1_task1/src/census_pipeline.py`, `part_1_task1/src/build_dataset.py`, `part_1_task1/tests/` | Ran the script and the tests, compared the audit numbers against the raw file |
+| OpenCode agent | Implement the chart design from `designs/Charts.jpg` in seaborn | `part_1_task1/src/make_charts.py`, `reports/figures/` | Opened every PNG, checked that each number in the captions matched the data |
 | OpenCode agent | Draft this report from the measured results | `reports/task1.md` | Re-read, corrected and rephrased by me before tagging |
 | OpenCode agent | Keep `AI_LOG.md` up to date | `AI_LOG.md` | Reviewed each row |
 

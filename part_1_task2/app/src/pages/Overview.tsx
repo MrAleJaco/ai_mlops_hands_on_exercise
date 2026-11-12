@@ -24,7 +24,7 @@ export function Overview() {
       <header className="page-header">
         <h1>One view of the whole analysis</h1>
         <p>
-          The four figures of <code>part_1/src/make_charts.py</code>, drawn live from the same
+          The four figures of <code>part_1_task1/src/make_charts.py</code>, drawn live from the same
           pipeline that produced the Task 1 report. Every number below is computed by the API on
           the current filter selection, not copied into the page.
         </p>

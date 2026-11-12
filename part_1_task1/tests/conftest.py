@@ -1,4 +1,4 @@
-"""Make `part_1/src` importable when pytest runs from the repository root."""
+"""Make `part_1_task1/src` importable when pytest runs from the repository root."""
 
 import sys
 from pathlib import Path

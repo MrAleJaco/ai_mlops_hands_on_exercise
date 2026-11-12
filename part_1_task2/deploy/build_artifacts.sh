@@ -18,7 +18,7 @@ if [ ! -f "$raw" ]; then
     raw="/data/datasets/census_income.csv"
 fi
 if [ ! -f "$raw" ]; then
-    echo "No raw CSV found. Put census_income.csv in part_1/data/raw_data/ or datasets/." >&2
+    echo "No raw CSV found. Put census_income.csv in part_1_task1/data/raw_data/ or datasets/." >&2
     exit 1
 fi
 
@@ -26,4 +26,4 @@ out="${CENSUS_ENCODED_PATH:-$artifacts/census_income_final.csv}"
 mkdir -p "$(dirname "$out")"
 
 echo "Building artefacts from $raw as $(id -un) ($(id -u))"
-exec python part_1/src/build_dataset.py --input "$raw" --output "$out"
+exec python part_1_task1/src/build_dataset.py --input "$raw" --output "$out"

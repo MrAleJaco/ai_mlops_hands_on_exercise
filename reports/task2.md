@@ -3,10 +3,10 @@
 | Field | Value |
 | --- | --- |
 | Student | Alessandro Jacopo Ravizza |
-| Dataset | Census Income (`part_1/data/raw_data/census_income.csv`) |
+| Dataset | Census Income (`part_1_task1/data/raw_data/census_income.csv`) |
 | Task | 2 |
 | Tag / commit | `task2` / `a71b75d` (deploy) + `cbb634e` (app) |
-| How to run | `cp datasets/census_income.csv part_1/data/raw_data/`, then `cd part_2/deploy && docker compose up -d --build`; open <http://localhost:8080> |
+| How to run | `cp datasets/census_income.csv part_1_task1/data/raw_data/`, then `cd part_1_task2/deploy && docker compose up -d --build`; open <http://localhost:8080> |
 | Timebox | 2:30-3:00, finished |
 
 ## 1. Summary
@@ -24,8 +24,8 @@ the aggregates, the filter round trip and every view. The main limitation is
 that filters are not server-side authenticated or rate-limited: it is a demo
 service, not a public one.
 
-**Evidence:** `part_2/README.md`; `docker compose ps` shows all three services;
-`part_2/reports/screenshots/01-overview.png`.
+**Evidence:** `part_1_task2/README.md`; `docker compose ps` shows all three services;
+`part_1_task2/reports/screenshots/01-overview.png`.
 
 ## 2. Goal and success criteria
 
@@ -42,7 +42,7 @@ clone with one command - without duplicating the preprocessing logic.
 | No data committed | `git status` after a clean clone | raw and processed files ignored | `.gitignore` still excludes both |
 | Automated checks | pytest / Vitest / Playwright | all green | 41 + 13 + 7, no console errors |
 
-**Evidence:** `part_2/api/tests/`, `part_2/app/src/test/`, `npm run screenshots`
+**Evidence:** `part_1_task2/api/tests/`, `part_1_task2/app/src/test/`, `npm run screenshots`
 output; `docker compose ps` in section 4.
 
 ## 3. Approach and key decisions
@@ -69,8 +69,8 @@ raw CSV --(pipeline, one-shot)--> artifacts volume --(read-only)--> api:8000
                                           browser <-- nginx:8080 + static bundle
 ```
 
-**Evidence:** `part_2/deploy/compose.yaml`, `part_2/api/aggregates.py`,
-`part_2/app/src/components/Chart.tsx`; `git log --oneline` for the three commits.
+**Evidence:** `part_1_task2/deploy/compose.yaml`, `part_1_task2/api/aggregates.py`,
+`part_1_task2/app/src/components/Chart.tsx`; `git log --oneline` for the three commits.
 
 ## 4. Results
 
@@ -86,45 +86,45 @@ raw CSV --(pipeline, one-shot)--> artifacts volume --(read-only)--> api:8000
 | Tests | 41 pytest, 13 Vitest, 7 Playwright views | Task 1 had 19 pytest |
 | Numbers preserved | 48,790 rows, 23.94% >50K, 44.61% married-civ-spouse, 13,486 hours outliers | `reports/task1.md` |
 
-![Overview of the deployed app](../part_2/reports/screenshots/01-overview.png)
+![Overview of the deployed app](../part_1_task2/reports/screenshots/01-overview.png)
 
 **Figure 1.** The Overview recomputes 48,790 rows in view and 23.9% high
 earners from the API on the current filter selection; the four cards link to
 the interactive version of each Task 1 figure.
 
-![Distribution view with the categorical box](../part_2/reports/screenshots/02-distribution.png)
+![Distribution view with the categorical box](../part_1_task2/reports/screenshots/02-distribution.png)
 
 **Figure 2.** Figure 1 interactively: the `native-country` panel spans
 43,782 rows down to 1, so the auto axis is logarithmic and the rare level is
 still visible.
 
-![Target relation, numeric](../part_2/reports/screenshots/03-target-numeric.png)
+![Target relation, numeric](../part_1_task2/reports/screenshots/03-target-numeric.png)
 
 **Figure 3.** Figure 2 interactively: `education-num` keeps its 9 vs 12 year
 medians (+33%) and the density plot behind the boxes.
 
-![Target relation, categorical](../part_2/reports/screenshots/04-target-categorical.png)
+![Target relation, categorical](../part_1_task2/reports/screenshots/04-target-categorical.png)
 
 **Figure 4.** Figure 3 interactively: bars are the share above 50K with a 95%
 Wilson interval; the slider hides categories below n = 30, which removes the
 France-style 42.1% on 38 rows.
 
-![Scatter matrix](../part_2/reports/screenshots/05-correlations-matrix.png)
+![Scatter matrix](../part_1_task2/reports/screenshots/05-correlations-matrix.png)
 
 **Figure 5.** Figure 4 interactively: 21 panels in one canvas, up to 350 sampled
 points per class per panel, the diagonal replaced by per-class densities.
 
-![One pair, enlarged](../part_2/reports/screenshots/06-correlations-pair.png)
+![One pair, enlarged](../part_1_task2/reports/screenshots/06-correlations-pair.png)
 
 **Figure 6.** The pair view sends up to 4,000 rows per class, or all 48,790 on
 request, and exposes the 99,999 cap on `capital-gain` directly.
 
-![Processed data](../part_2/reports/screenshots/07-processed-data.png)
+![Processed data](../part_1_task2/reports/screenshots/07-processed-data.png)
 
 **Figure 7.** `/data` pages the encoded 48,790 x 93 artefact, with column search
 - the only view that needs the wide table.
 
-**Evidence:** `part_2/reports/screenshots/`; `docker images`; the timing and
+**Evidence:** `part_1_task2/reports/screenshots/`; `docker images`; the timing and
 payload measurements printed in this section; `uv run pytest` / `npm run test`.
 
 ## 5. Problems and how you handled them
@@ -139,8 +139,8 @@ payload measurements printed in this section; `uv run pytest` / `npm run test`.
 | Vitest reported "found multiple elements" in an unrelated test | Vitest globals are off, so Testing Library never cleaned the DOM between tests | Registered `afterEach(cleanup)` in `src/test/setup.ts` | Solved |
 | The API image stayed at 828 MB after moving dev dependencies | The old image was still in use and `api` is not a build target | Rebuilt `pipeline`, which dropped the venv to 368 MB | Solved |
 
-**Evidence:** `part_2/deploy/build_artifacts.sh`, `part_2/app/src/index.css`,
-`part_2/app/src/test/setup.ts`; the compose build log.
+**Evidence:** `part_1_task2/deploy/build_artifacts.sh`, `part_1_task2/app/src/index.css`,
+`part_1_task2/app/src/test/setup.ts`; the compose build log.
 
 ## 6. Limitations and trade-offs
 
@@ -155,7 +155,7 @@ payload measurements printed in this section; `uv run pytest` / `npm run test`.
 | operations | API image is 673 MB, mostly pandas and scikit-learn | Slow first pull | Multi-stage already applied; a slim base or a lock-only runtime would cut more |
 | front end | 312 kB gzip is still a large single chunk | First paint waits for ECharts | Route-level `import()` for the correlation views |
 
-**Evidence:** `part_2/api/app.py` (cache bounds), `part_2/app/scripts/screenshots.mjs`
+**Evidence:** `part_1_task2/api/app.py` (cache bounds), `part_1_task2/app/scripts/screenshots.mjs`
 (sample sizes), `docker images`.
 
 ## 7. Next steps
@@ -168,16 +168,16 @@ payload measurements printed in this section; `uv run pytest` / `npm run test`.
 | 4 | Move to a container orchestrator with health-gated rollout | Task 4 asks for a production view | L |
 | 5 | Reuse the API as the data source for the Task 3 agent tools | One source of truth for the dataset | M |
 
-**Evidence:** section 6; `part_2/deploy/compose.yaml`.
+**Evidence:** section 6; `part_1_task2/deploy/compose.yaml`.
 
 ## 8. Use of AI assistants
 
 | Tool | What you used it for | Where (files or sections) | How you checked the output |
 | --- | --- | --- | --- |
-| OpenCode agent (DeepSeek V4.1 Flash) | Draft the FastAPI endpoints and the pandas aggregates | `part_2/api/` | 22 pytest tests pinned to the Task 1 numbers; ran every endpoint |
-| OpenCode agent | Scaffold the React + ECharts front end | `part_2/app/src/` | `npm run build`, 13 Vitest tests, 7 screenshots reviewed one by one |
-| OpenCode agent | Dockerfile and compose structure, plus the volume permission error | `part_2/deploy/` | Rebuilt from scratch, checked health, sizes and ports myself |
-| OpenCode agent | Draft this report and the README from measured output | `part_2/README.md`, this file | Re-read, corrected and rephrased before tagging |
+| OpenCode agent (DeepSeek V4.1 Flash) | Draft the FastAPI endpoints and the pandas aggregates | `part_1_task2/api/` | 22 pytest tests pinned to the Task 1 numbers; ran every endpoint |
+| OpenCode agent | Scaffold the React + ECharts front end | `part_1_task2/app/src/` | `npm run build`, 13 Vitest tests, 7 screenshots reviewed one by one |
+| OpenCode agent | Dockerfile and compose structure, plus the volume permission error | `part_1_task2/deploy/` | Rebuilt from scratch, checked health, sizes and ports myself |
+| OpenCode agent | Draft this report and the README from measured output | `part_1_task2/README.md`, this file | Re-read, corrected and rephrased before tagging |
 
 The assistant misled me about image size: it reported the API image as "828 MB
 after the change", because `docker compose build api` silently built nothing.

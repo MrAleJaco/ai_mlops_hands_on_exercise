@@ -9,9 +9,9 @@ services:
   pipeline:
     build:
       context: ../..
-      dockerfile: part_2/deploy/Dockerfile.api
+      dockerfile: part_1_task2/deploy/Dockerfile.api
     image: census-explorer-api:local
-    command: ["sh", "/app/part_2/deploy/build_artifacts.sh"]
+    command: ["sh", "/app/part_1_task2/deploy/build_artifacts.sh"]
     # Starts as root only to chown the fresh volume, then drops to uid 10001
     # inside the script (see build_artifacts.sh).
     user: "0:0"
@@ -20,7 +20,7 @@ services:
       CENSUS_RAW_PATH: /data/raw/census_income.csv
       CENSUS_ENCODED_PATH: /data/artifacts/census_income_final.csv
     volumes:
-      - ../../part_1/data/raw_data:/data/raw:ro
+      - ../../part_1_task1/data/raw_data:/data/raw:ro
       - ../../datasets:/data/datasets:ro
       - artifacts:/data/artifacts
     restart: "no"
@@ -32,7 +32,7 @@ services:
       CENSUS_ENCODED_PATH: /data/artifacts/census_income_final.csv
       CORS_ORIGINS: http://localhost:5173
     volumes:
-      - ../../part_1/data/raw_data:/data/raw:ro
+      - ../../part_1_task1/data/raw_data:/data/raw:ro
       - ../../datasets:/data/datasets:ro
       - artifacts:/data/artifacts:ro
     depends_on:
@@ -56,7 +56,7 @@ services:
   web:
     build:
       context: ../..
-      dockerfile: part_2/deploy/Dockerfile.web
+      dockerfile: part_1_task2/deploy/Dockerfile.web
     image: census-explorer-web:local
     depends_on:
       api:

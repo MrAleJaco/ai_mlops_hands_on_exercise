@@ -3,7 +3,7 @@
  *
  * Opens every view of the deployed stack, waits for the API data, records
  * console/page errors and writes one screenshot per view to
- * part_2/reports/screenshots/. Run it against a live `docker compose up`:
+ * part_1_task2/reports/screenshots/. Run it against a live `docker compose up`:
  *
  *   npm run screenshots                 # http://localhost:8080
  *   APP_URL=http://localhost:5173 npm run screenshots

@@ -1,13 +1,13 @@
 """Census Income preprocessing pipeline.
 
-Input : part_1/data/raw_data/census_income.csv
+Input : part_1_task1/data/raw_data/census_income.csv
         (raw Kaggle Adult file, 48,842 rows x 15 messy columns)
 Output: ONE unified DataFrame made of
         - 6 numeric columns, median-imputed
         - the one-hot encoded categorical columns
         - the binary target `income` (0 = "<=50K", 1 = ">50K")
 
-The flow is the one drawn in part_1/data/designs/EDA.jpg:
+The flow is the one drawn in part_1_task1/data/designs/EDA.jpg:
 
     raw CSV
       -> clean the text (headers + cells)

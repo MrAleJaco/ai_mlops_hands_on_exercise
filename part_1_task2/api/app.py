@@ -14,7 +14,7 @@ bottleneck (see reports/task2.md).
 
 Run locally:
 
-    uv run uvicorn app:app --app-dir part_2/api --reload --port 8000
+    uv run uvicorn app:app --app-dir part_1_task2/api --reload --port 8000
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 API_DIR = Path(__file__).resolve().parent
 REPO_ROOT = API_DIR.parents[1]
-SRC_DIR = REPO_ROOT / "part_1" / "src"
+SRC_DIR = REPO_ROOT / "part_1_task1" / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
@@ -52,10 +52,10 @@ from filters import Filters, split_csv  # noqa: E402
 # ---------------------------------------------------------------------------
 def resolve_raw_path() -> Path:
     """First readable candidate wins, so the same image works in Docker and
-    from a fresh clone: env var, the part_1 copy, then the datasets folder."""
+    from a fresh clone: env var, the part_1_task1 copy, then the datasets folder."""
     candidates = [
         os.getenv("CENSUS_RAW_PATH"),
-        REPO_ROOT / "part_1" / "data" / "raw_data" / "census_income.csv",
+        REPO_ROOT / "part_1_task1" / "data" / "raw_data" / "census_income.csv",
         REPO_ROOT / "datasets" / "census_income.csv",
     ]
     for candidate in candidates:
@@ -63,14 +63,14 @@ def resolve_raw_path() -> Path:
             return Path(candidate)
     raise FileNotFoundError(
         "No raw CSV found. Set CENSUS_RAW_PATH or copy datasets/census_income.csv "
-        "to part_1/data/raw_data/census_income.csv"
+        "to part_1_task1/data/raw_data/census_income.csv"
     )
 
 
 def resolve_encoded_path() -> Path:
     return Path(
         os.getenv("CENSUS_ENCODED_PATH")
-        or REPO_ROOT / "part_1" / "data" / "processed" / "census_income_final.csv"
+        or REPO_ROOT / "part_1_task1" / "data" / "processed" / "census_income_final.csv"
     )
 
 
@@ -318,7 +318,7 @@ def api_table(
     if encoded is None:
         raise HTTPException(
             status_code=503,
-            detail="Encoded table not built yet. Run part_1/src/build_dataset.py.",
+            detail="Encoded table not built yet. Run part_1_task1/src/build_dataset.py.",
         )
 
     columns = [str(name) for name in encoded.columns]

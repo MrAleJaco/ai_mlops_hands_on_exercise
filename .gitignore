@@ -219,12 +219,12 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Part 1 generated dataset (rebuild with part_1/src/build_dataset.py)
-part_1/data/processed/
+# Part 1 generated dataset (rebuild with part_1_task1/src/build_dataset.py)
+part_1_task1/data/processed/
 
 # Datasets: never committed, download or copy them locally
 datasets/
-part_1/data/raw_data/
+part_1_task1/data/raw_data/
 *.csv
 *.zip
 !reports/**/*.csv

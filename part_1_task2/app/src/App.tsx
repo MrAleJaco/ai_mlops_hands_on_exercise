@@ -57,7 +57,7 @@ export default function App() {
 
       <footer className="footer">
         <span>Census Income · 48,790 rows after cleaning · data served by FastAPI, charts by ECharts</span>
-        <span>Source: part_1/src/census_pipeline.py + build_dataset.py</span>
+        <span>Source: part_1_task1/src/census_pipeline.py + build_dataset.py</span>
       </footer>
     </div>
   )
