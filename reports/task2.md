@@ -5,7 +5,7 @@
 | Student | Alessandro Jacopo Ravizza |
 | Dataset | Census Income (`part_1/data/raw_data/census_income.csv`) |
 | Task | 2 |
-| Tag / commit | `task2` |
+| Tag / commit | `task2` / `a71b75d` (deploy) + `cbb634e` (app) |
 | How to run | `cp datasets/census_income.csv part_1/data/raw_data/`, then `cd part_2/deploy && docker compose up -d --build`; open <http://localhost:8080> |
 | Timebox | 2:30-3:00, finished |
 
@@ -86,40 +86,40 @@ raw CSV --(pipeline, one-shot)--> artifacts volume --(read-only)--> api:8000
 | Tests | 41 pytest, 13 Vitest, 7 Playwright views | Task 1 had 19 pytest |
 | Numbers preserved | 48,790 rows, 23.94% >50K, 44.61% married-civ-spouse, 13,486 hours outliers | `reports/task1.md` |
 
-![Overview of the deployed app](screenshots/01-overview.png)
+![Overview of the deployed app](../part_2/reports/screenshots/01-overview.png)
 
 **Figure 1.** The Overview recomputes 48,790 rows in view and 23.9% high
 earners from the API on the current filter selection; the four cards link to
 the interactive version of each Task 1 figure.
 
-![Distribution view with the categorical box](screenshots/02-distribution.png)
+![Distribution view with the categorical box](../part_2/reports/screenshots/02-distribution.png)
 
 **Figure 2.** Figure 1 interactively: the `native-country` panel spans
 43,782 rows down to 1, so the auto axis is logarithmic and the rare level is
 still visible.
 
-![Target relation, numeric](screenshots/03-target-numeric.png)
+![Target relation, numeric](../part_2/reports/screenshots/03-target-numeric.png)
 
 **Figure 3.** Figure 2 interactively: `education-num` keeps its 9 vs 12 year
 medians (+33%) and the density plot behind the boxes.
 
-![Target relation, categorical](screenshots/04-target-categorical.png)
+![Target relation, categorical](../part_2/reports/screenshots/04-target-categorical.png)
 
 **Figure 4.** Figure 3 interactively: bars are the share above 50K with a 95%
 Wilson interval; the slider hides categories below n = 30, which removes the
 France-style 42.1% on 38 rows.
 
-![Scatter matrix](screenshots/05-correlations-matrix.png)
+![Scatter matrix](../part_2/reports/screenshots/05-correlations-matrix.png)
 
 **Figure 5.** Figure 4 interactively: 21 panels in one canvas, up to 350 sampled
 points per class per panel, the diagonal replaced by per-class densities.
 
-![One pair, enlarged](screenshots/06-correlations-pair.png)
+![One pair, enlarged](../part_2/reports/screenshots/06-correlations-pair.png)
 
 **Figure 6.** The pair view sends up to 4,000 rows per class, or all 48,790 on
 request, and exposes the 99,999 cap on `capital-gain` directly.
 
-![Processed data](screenshots/07-processed-data.png)
+![Processed data](../part_2/reports/screenshots/07-processed-data.png)
 
 **Figure 7.** `/data` pages the encoded 48,790 x 93 artefact, with column search
 - the only view that needs the wide table.

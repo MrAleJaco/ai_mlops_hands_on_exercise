@@ -17,3 +17,4 @@ See [ground_rules.md](ground_rules.md#using-ai-assistants).
 | 15:02 | Task 2 - deployment: Dockerfile and compose structure, nginx single-origin proxy, explaining the named-volume PermissionError | Explanation used; rebuilt the stack and checked health, ports and image sizes myself |
 | 15:09 | Task 2 - splitting test and chart dependencies into a dev group to shrink the API image | Used as suggested; rebuilt and compared image size and package count |
 | 15:16 | Task 2 - drafting part_2/README.md and part_2/reports/task2.md from the measured results | Draft kept for review; must be re-read and rephrased in my own words before tagging |
+| 15:35 | Task 2 - moving the report to reports/task2.md and repointing its image links | Used as suggested; checked every heading against the template and that all links resolve on disk |

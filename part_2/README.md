@@ -10,7 +10,7 @@ with shared filters and a preview of the encoded 93-column artefact.
   and nginx serving the static bundle. No database.
 
 The report with measured numbers and the trade-offs is in
-[`reports/task2.md`](reports/task2.md); screenshots of every view are in
+[`reports/task2.md`](../reports/task2.md); screenshots of every view are in
 [`reports/screenshots/`](reports/screenshots/).
 
 ## Views
@@ -150,7 +150,7 @@ send all 48,790 rows on request.
 | `app/src/hooks/useFilters.ts` | URL is the single source of truth for the selection |
 | `app/src/hooks/useApi.ts` | TanStack Query wrapper: cache key = endpoint + filters |
 | `deploy/` | both Dockerfiles, nginx config, compose file, artefact builder |
-| `reports/` | task report and screenshots |
+| `reports/` | screenshots referenced by `reports/task2.md` |
 
 ## Checks
 

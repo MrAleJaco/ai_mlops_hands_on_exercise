@@ -2,8 +2,8 @@ name: census-income-explorer
 
 # Three services, one direction of data flow:
 #   pipeline (one-shot) -> named volume -> api -> web
-# No database: the artefacts are 5.7 MB / 9.5 MB CSVs and the API answers
-# every aggregate in ~13 ms (numbers in part_2/reports/task2.md).
+# No database: the artefacts are 5.7 MB / 9.5 MB CSVs and a cached aggregate
+# answers in ~2 ms (24 ms for the uncached audit in reports/task2.md).
 
 services:
   pipeline:
