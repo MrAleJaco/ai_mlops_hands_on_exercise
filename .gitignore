@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Part 1 generated dataset (rebuild with part_1/src/build_dataset.py)
+part_1/data/processed/
