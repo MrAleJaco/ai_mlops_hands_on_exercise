@@ -1,3 +1,7 @@
 # Datasets are not tracked in this repository (see .gitignore).
 # They were previously stored with Git LFS, which a public fork cannot accept,
 # so the LFS filters were removed.
+
+# Shell scripts run inside Linux containers: a CRLF checkout turns them into
+# "\r: not found", so keep them LF whatever the host OS is.
+*.sh text eol=lf

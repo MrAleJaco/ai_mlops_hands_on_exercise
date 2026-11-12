@@ -11,7 +11,8 @@ import { Chart } from '../Chart'
  * the n, as in the PNG.
  */
 export function shareBarsOption(levels: CategoryLevel[], overall: number): EChartsOption {
-  const max = Math.max(...levels.map((level) => level.share), overall, 10)
+  const highest = Math.max(...levels.map((level) => level.share), overall, 10)
+  const max = Math.ceil((highest * 1.3) / 5) * 5
   const reference = {
     xAxis: overall,
     label: { formatter: `overall ${overall.toFixed(1)}%`, fontSize: 10, color: colors.reference },
@@ -36,7 +37,7 @@ export function shareBarsOption(levels: CategoryLevel[], overall: number): EChar
     },
     xAxis: {
       type: 'value',
-      max: max * 1.3,
+      max,
       axisLabel: { formatter: '{value}%', fontSize: 10 },
       splitLine: { lineStyle: { color: colors.grid } },
     },

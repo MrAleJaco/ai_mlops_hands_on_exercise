@@ -1,0 +1,18 @@
+# Keep the build context small: images only need source, never data or
+# installed dependencies. Files here are still available to containers through
+# the volume mounts in compose.yaml.
+.git
+.gitattributes
+.pytest_cache
+.venv
+**/__pycache__
+**/*.py[codz]
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+part_1/data
+reports
+datasets
+docs
+*.md
+!part_2/app/README.md

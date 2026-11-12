@@ -216,6 +216,13 @@ nav {
   padding: 5px 10px;
 }
 
+/* Keep the active state visible inside the grey group background. */
+.toggle-group .toggle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 .ghost:disabled {
   opacity: 0.45;
   cursor: default;

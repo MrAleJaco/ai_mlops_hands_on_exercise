@@ -7,7 +7,7 @@ import { Chart } from '../Chart'
 export function scatterOption(data: Relation, logX = false, logY = false): EChartsOption {
   return {
     animation: false,
-    grid: { left: 64, right: 24, top: 34, bottom: 58 },
+    grid: { left: 64, right: 24, top: 34, bottom: 72 },
     legend: { top: 0, icon: 'circle', itemWidth: 8 },
     tooltip: {
       trigger: 'item',
@@ -18,7 +18,7 @@ export function scatterOption(data: Relation, logX = false, logY = false): EChar
     },
     dataZoom: [
       { type: 'inside', filterMode: 'none' },
-      { type: 'slider', height: 18, bottom: 10, filterMode: 'none' },
+      { type: 'slider', height: 16, bottom: 6, filterMode: 'none' },
     ],
     xAxis: {
       type: logX ? 'log' : 'value',
@@ -44,10 +44,10 @@ export function scatterOption(data: Relation, logX = false, logY = false): EChar
         type: 'scatter' as const,
         name: item.label,
         data: item.points,
-        symbolSize: 4,
+        symbolSize: 5,
         large: true,
         largeThreshold: 2000,
-        itemStyle: { color: colour, opacity: 0.22 },
+        itemStyle: { color: colour, opacity: 0.3 },
         emphasis: { itemStyle: { opacity: 0.7 } },
       }
     }),

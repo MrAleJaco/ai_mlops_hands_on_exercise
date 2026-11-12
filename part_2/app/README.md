@@ -1,32 +1,41 @@
-# React + TypeScript + Vite
+# Census Income Explorer - front end
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + TypeScript + Vite + Apache ECharts. See [`../README.md`](../README.md)
+for the full stack, the API contract and the deployment.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The app expects the API on port 8000; Vite proxies `/api` to it.
 
-## React Compiler
+```bash
+# terminal 1 (repository root)
+uv run uvicorn app:app --app-dir part_2/api --reload --port 8000
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# terminal 2
+cd part_2/app
+npm install
+npm run dev          # http://localhost:5173
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Checks
+
+```bash
+npm run build        # tsc -b && vite build
+npm run test         # 13 Vitest tests (filters, box statistics, pages)
+npm run screenshots  # Playwright smoke test against a running stack
+```
+
+`npm run screenshots` writes one PNG per view to `../reports/screenshots/`
+and fails if the browser logs an error, so it is both the evidence for the
+report and a regression check.
+
+## Layout
+
+| Path | Responsibility |
+| --- | --- |
+| `src/pages/` | one file per view: Overview, Distribution, TargetRelation, Correlations, ProcessedData |
+| `src/components/charts/` | ECharts option builders, one per figure (`BoxPlot`, `CountsChart`, `ShareBars`, `Density`, `Scatter`, `ScatterMatrix`) |
+| `src/components/Chart.tsx` | the only place that touches the ECharts runtime (init, resize, dispose) |
+| `src/hooks/useFilters.ts` | filters live in the URL: parse, apply, reset |
+| `src/hooks/useApi.ts` | TanStack Query wrapper: cache key = endpoint + filters |
+| `src/api/` | typed fetch client and hand-written response types |

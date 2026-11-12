@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1.7
+# Two stages: heavy dependencies first (cached across code edits), then a slim
+# runtime with a non-root user.
+
+# ---------- dependencies ----------
+FROM python:3.12-slim AS deps
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1
+RUN pip install --no-cache-dir uv==0.13.7
+WORKDIR /app
+
+# Only the lock files here, so this layer survives every source change.
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
+
+# ---------- runtime ----------
+FROM python:3.12-slim AS runtime
+ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin app
+WORKDIR /app
+
+COPY --from=deps /app/.venv /app/.venv
+COPY pyproject.toml ./
+COPY part_1/src part_1/src
+COPY part_2/api part_2/api
+COPY part_2/deploy/build_artifacts.sh part_2/deploy/build_artifacts.sh
+
+USER app
+EXPOSE 8000
+
+HEALTHCHECK --interval=10s --timeout=3s --start-period=20s --retries=6 \
+    CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz').status == 200 else 1)"
+
+# The same image runs the one-shot preprocessing job (compose overrides CMD).
+CMD ["uvicorn", "app:app", "--app-dir", "part_2/api", "--host", "0.0.0.0", "--port", "8000"]

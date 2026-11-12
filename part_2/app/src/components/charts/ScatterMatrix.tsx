@@ -68,6 +68,7 @@ export function matrixOption(data: RelationMatrix): EChartsOption {
           showSymbol: false,
           silent: true,
           lineStyle: { color: colour, width: 1 },
+          itemStyle: { color: colour },
           areaStyle: { color: colour, opacity: 0.12 },
         }
       }
